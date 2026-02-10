@@ -159,7 +159,6 @@ button{
 </div>
 
 <audio id="bgMusic" loop>
-  <!-- Cambia esta URL por la URL directa de tu GitHub Pages -->
   <source src="https://alanruizig01-byte.github.io/AlanRuiz/cancion.mp3" type="audio/mpeg">
 </audio>
 
@@ -175,23 +174,14 @@ function intro(){
   <div class="panel">
     <h1>Hola <span class="name">Brianda Karely</span> 💖</h1>
     <p>Eres ÚNICA y ESPECIAL.</p>
-    <button id="startBtn">Comenzar</button>
+    <button onclick="startMusic(); historia()">Comenzar</button>
   </div>`;
-
-  // 🔹 Activar música al hacer click (funciona en móvil)
-  document.getElementById("startBtn").addEventListener("click",()=>{
-    startMusic();
-    historia();
-  });
 }
 
-// 🎵 Música de fondo segura en móviles
+// 🎵 Música de fondo
 function startMusic(){
   music.volume=0.5;
-  // Reproducir y atrapar error
-  music.play().catch(e=>{
-    console.log("Autoplay bloqueado, se activará en click");
-  });
+  music.play().catch(()=>{});
 }
 
 // 📸 Slider de fotos
@@ -199,7 +189,7 @@ function historia(){
   let fotos = ["foto1.jpg","foto2.jpg","foto3.jpg","foto4.jpg","foto5.jpg","foto6.jpg","foto8.jpg","foto9.jpg"];
   let currentFoto=0;
   let vueltas=0;
-  let notifMostrada=false; // 🔹 Solo mostrar una vez
+  let notifMostrada=false;
 
   stage.innerHTML=`
   <div class="panel">
@@ -288,7 +278,8 @@ function final(){
       </div>
       <div class="confetti">
         ${Array.from({length:100}).map(()=>'<span></span>').join('')}
-      </div>`;
+      </div>
+      <button onclick="location.reload()" style="margin-top:20px;">Reproducir de nuevo</button>`; // botón visible en móviles
 
     const imgEl = document.querySelector(".final-img");
     setTimeout(()=>{ imgEl.style.opacity = 1; }, 50);
@@ -318,7 +309,6 @@ function showNotif(msg){
   setTimeout(()=>{n.remove()},5000);
 }
 
-// Exponer funciones globales
 window.startMusic=startMusic;
 window.historia=historia;
 window.pregunta=pregunta;
@@ -326,7 +316,7 @@ window.carta=carta;
 window.final=final;
 
 intro();
+});
 </script>
 </body>
 </html>
-
