@@ -159,9 +159,9 @@ button{
 </div>
 
 <audio id="bgMusic" loop>
+  <!-- Cambia esta URL por la URL directa de tu GitHub Pages -->
   <source src="https://alanruizig01-byte.github.io/AlanRuiz/cancion.mp3" type="audio/mpeg">
 </audio>
-
 
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
@@ -175,14 +175,23 @@ function intro(){
   <div class="panel">
     <h1>Hola <span class="name">Brianda Karely</span> 💖</h1>
     <p>Eres ÚNICA y ESPECIAL.</p>
-    <button onclick="startMusic(); historia()">Comenzar</button>
+    <button id="startBtn">Comenzar</button>
   </div>`;
+
+  // 🔹 Activar música al hacer click (funciona en móvil)
+  document.getElementById("startBtn").addEventListener("click",()=>{
+    startMusic();
+    historia();
+  });
 }
 
-// 🎵 Música de fondo
+// 🎵 Música de fondo segura en móviles
 function startMusic(){
   music.volume=0.5;
-  music.play().catch(()=>{});
+  // Reproducir y atrapar error
+  music.play().catch(e=>{
+    console.log("Autoplay bloqueado, se activará en click");
+  });
 }
 
 // 📸 Slider de fotos
@@ -266,7 +275,6 @@ function carta(){
 
 // 🎉 Final con corazones y confeti
 function final(){
-  // 💡 Preload imagen final
   const finalImg = new Image();
   finalImg.src = "foto7.jpg";
   finalImg.onload = () => {
@@ -282,18 +290,15 @@ function final(){
         ${Array.from({length:100}).map(()=>'<span></span>').join('')}
       </div>`;
 
-    // Mostrar la imagen con fade rápido
     const imgEl = document.querySelector(".final-img");
     setTimeout(()=>{ imgEl.style.opacity = 1; }, 50);
 
-    // Corazones
     document.querySelectorAll(".final-hearts span").forEach(h=>{
       h.style.left=Math.random()*100+"vw";
       h.style.fontSize=(18+Math.random()*24)+"px";
       h.style.animationDuration=(4+Math.random()*4)+"s";
     });
 
-    // Confeti
     document.querySelectorAll(".confetti span").forEach(c=>{
       c.style.left=Math.random()*100+"vw";
       c.style.background=`hsl(${Math.random()*360},80%,60%)`;
@@ -321,7 +326,7 @@ window.carta=carta;
 window.final=final;
 
 intro();
-});
 </script>
 </body>
 </html>
+
