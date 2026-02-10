@@ -102,6 +102,8 @@ button{
   max-height:300px;
   border-radius:18px;
   margin-top:14px;
+  opacity:0;
+  transition:opacity 0.5s;
 }
 
 /* CORAZONES */
@@ -157,7 +159,7 @@ button{
 </div>
 
 <audio id="bgMusic" loop>
-  <source src="cancion.mp3" type="audio/mpeg">
+  <source src="Cancion.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -261,7 +263,7 @@ function carta(){
   </div>`;
 }
 
-<!-- FINAL CON CORAZONES Y CONFETI RÁPIDO -->
+// 🎉 Final con corazones y confeti
 function final(){
   // 💡 Preload imagen final
   const finalImg = new Image();
@@ -270,7 +272,7 @@ function final(){
     stage.innerHTML=`
       <div class="panel final">
         <h1>TE ELIJO HOY Y SIEMPRE</h1>
-        <img class="final-img" src="foto7.jpg" style="opacity:0; transition:opacity 0.5s;">
+        <img class="final-img" src="foto7.jpg">
       </div>
       <div class="final-hearts">
         ${Array.from({length:40}).map(()=>'<span>❤️</span>').join('')}
@@ -322,3 +324,4 @@ intro();
 </script>
 </body>
 </html>
+
