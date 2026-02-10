@@ -261,33 +261,44 @@ function carta(){
   </div>`;
 }
 
-// 🎉 Final con corazones y confeti
+<!-- FINAL CON CORAZONES Y CONFETI RÁPIDO -->
 function final(){
-  stage.innerHTML=`
-  <div class="panel final">
-    <h1>TE ELIJO HOY Y SIEMPRE</h1>
-    <img class="final-img" src="foto7.jpg">
-  </div>
-  <div class="final-hearts">
-    ${Array.from({length:40}).map(()=>'<span>❤️</span>').join('')}
-  </div>
-  <div class="confetti">
-    ${Array.from({length:100}).map(()=>'<span></span>').join('')}
-  </div>`;
+  // 💡 Preload imagen final
+  const finalImg = new Image();
+  finalImg.src = "foto7.jpg";
+  finalImg.onload = () => {
+    stage.innerHTML=`
+      <div class="panel final">
+        <h1>TE ELIJO HOY Y SIEMPRE</h1>
+        <img class="final-img" src="foto7.jpg" style="opacity:0; transition:opacity 0.5s;">
+      </div>
+      <div class="final-hearts">
+        ${Array.from({length:40}).map(()=>'<span>❤️</span>').join('')}
+      </div>
+      <div class="confetti">
+        ${Array.from({length:100}).map(()=>'<span></span>').join('')}
+      </div>`;
 
-  document.querySelectorAll(".final-hearts span").forEach(h=>{
-    h.style.left=Math.random()*100+"vw";
-    h.style.fontSize=(18+Math.random()*24)+"px";
-    h.style.animationDuration=(4+Math.random()*4)+"s";
-  });
+    // Mostrar la imagen con fade rápido
+    const imgEl = document.querySelector(".final-img");
+    setTimeout(()=>{ imgEl.style.opacity = 1; }, 50);
 
-  document.querySelectorAll(".confetti span").forEach(c=>{
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},80%,60%)`;
-    c.style.animationDuration=(3+Math.random()*3)+"s";
-    c.style.width=(6+Math.random()*6)+"px";
-    c.style.height=c.style.width;
-  });
+    // Corazones
+    document.querySelectorAll(".final-hearts span").forEach(h=>{
+      h.style.left=Math.random()*100+"vw";
+      h.style.fontSize=(18+Math.random()*24)+"px";
+      h.style.animationDuration=(4+Math.random()*4)+"s";
+    });
+
+    // Confeti
+    document.querySelectorAll(".confetti span").forEach(c=>{
+      c.style.left=Math.random()*100+"vw";
+      c.style.background=`hsl(${Math.random()*360},80%,60%)`;
+      c.style.animationDuration=(3+Math.random()*3)+"s";
+      c.style.width=(6+Math.random()*6)+"px";
+      c.style.height=c.style.width;
+    });
+  };
 }
 
 // 🔔 Notificación
