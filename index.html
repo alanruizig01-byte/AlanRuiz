@@ -1,82 +1,76 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>¿Quieres ser mi Valentín?</title>
 
 <style>
 :root{
   --pink:#ff5fa2;
-  --bg:#0f0a10;
+  --shadow:0 0 18px rgba(255,95,162,.9);
 }
 *{box-sizing:border-box}
 body{
   margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Arial, sans-serif;
-  background: radial-gradient(1200px 600px at 50% -10%, #2a0f24, var(--bg));
+  font-family:system-ui, Arial;
   color:#fff;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
+  background:#0f0a10;
+  overflow-x:hidden;
 }
-.app{width:100%; max-width:1000px; padding:16px}
+
+/* Fondo animado */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:url("foto10.jpg") repeat;
+  background-size:50% 50%;
+  opacity:.35;
+  animation:moveBg 40s linear infinite;
+  z-index:0;
+}
+@keyframes moveBg{
+  from{background-position:0 0}
+  to{background-position:100% 100%}
+}
+
+.app{position:relative;z-index:1;padding:16px}
 .stage{
-  width:100%;
-  border-radius:20px;
-  padding:20px;
-  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-  border:1px dashed rgba(255,255,255,.18);
+  max-width:1000px;
+  margin:auto;
+  background:rgba(255,255,255,.08);
+  border-radius:22px;
+  padding:24px;
   min-height:420px;
   display:grid;
   place-items:center;
-  position:relative;
-  overflow:hidden;
-}
-.panel{
-  width:100%;
-  max-width:820px;
-  margin:0 auto;
-  text-align:center;
-  animation:fadeUp .4s ease both;
-  position:relative;
-  z-index:2;
 }
 
-h1{font-size:clamp(30px,8vw,72px)}
+.panel{text-align:center;animation:fade .4s}
+h1,h2,p{text-shadow:var(--shadow)}
+h1{font-size:clamp(32px,8vw,70px)}
 h2{font-size:clamp(22px,5vw,34px)}
-p{font-size:clamp(15px,4vw,18px); line-height:1.7}
+p{font-size:clamp(15px,4vw,18px);line-height:1.7}
 .name{color:var(--pink)}
 
 button{
+  margin:12px auto;
   width:100%;
   max-width:320px;
-  padding:14px 18px;
+  padding:14px;
   border-radius:16px;
   border:0;
-  cursor:pointer;
-  font-size:16px;
   font-weight:700;
-  background: linear-gradient(180deg, #ff7ab8, #ff3f8e);
-  color:#240015;
-  box-shadow: 0 10px 24px rgba(255,63,142,.35);
+  cursor:pointer;
+  background:linear-gradient(180deg,#ff7ab8,#ff3f8e);
+  box-shadow:0 12px 26px rgba(255,63,142,.45);
 }
 
-/* CARTA */
-.letter{
-  background:rgba(0,0,0,.35);
-  border:1px solid rgba(255,255,255,.25);
-  border-radius:18px;
-  padding:20px;
-  text-align:left;
-}
-
-/* SLIDER */
+/* Slider */
 .slider{
-  width:100%;
   max-width:520px;
   height:420px;
-  margin:18px auto;
   position:relative;
   overflow:hidden;
   border-radius:18px;
@@ -88,67 +82,71 @@ button{
   height:100%;
   object-fit:cover;
   opacity:0;
-  transform:scale(1.05);
-  transition:opacity 1s ease, transform 1s ease;
+  transition:1s;
 }
-.slider img.active{
-  opacity:1;
-  transform:scale(1);
+.slider img.active{opacity:1}
+
+/* REEL VIDEO */
+.reel{
+  max-width:420px;
+  height:260px;
+  margin:20px auto;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 18px 40px rgba(255,95,162,.6);
+  animation:float 4s ease-in-out infinite;
+}
+.reel video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+@keyframes float{
+  50%{transform:translateY(-12px)}
 }
 
-/* FINAL */
+/* Carta */
+.letter{
+  background:rgba(0,0,0,.35);
+  padding:20px;
+  border-radius:16px;
+  min-height:160px;
+  text-align:left;
+}
+
+/* Final */
 .final-img{
-  max-width:220px;
-  max-height:300px;
-  border-radius:18px;
-  margin-top:14px;
+  max-width:360px;
+  border-radius:20px;
   opacity:0;
-  transition:opacity 0.5s;
+  transition:.6s;
 }
 
-/* CORAZONES */
-.final-hearts span{
-  position:absolute;
-  bottom:-20px;
-  animation: floatUp linear infinite;
+/* 🔹 BOTONES FINAL */
+.final-actions{
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  width:100%;
 }
 
-/* CONFETI */
-.confetti span{
-  position:absolute;
-  width:8px;
-  height:8px;
-  background: #ff3f8e;
-  opacity:0.9;
-  border-radius:50%;
-  animation: confettiDrop linear infinite;
-}
-@keyframes confettiDrop{
-  0%{transform:translateY(0) rotate(0deg)}
-  100%{transform:translateY(120vh) rotate(360deg)}
-}
-
-@keyframes floatUp{
-  from{transform:translateY(0)}
-  to{transform:translateY(-120vh)}
-}
-@keyframes fadeUp{
-  from{opacity:0; transform:translateY(10px)}
-  to{opacity:1}
-}
-
-/* Notificación */
+/* 🔹 NOTIFICACIÓN */
 .notif{
   position:fixed;
-  top:10px;
+  top:14px;
   left:50%;
   transform:translateX(-50%);
   background:#ff5fa2;
-  padding:12px 20px;
+  padding:12px 18px;
   border-radius:18px;
   font-weight:700;
   z-index:9999;
-  box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px)}
 }
 </style>
 </head>
@@ -158,165 +156,166 @@ button{
   <div class="stage" id="stage"></div>
 </div>
 
-<audio id="bgMusic" loop>
-  <source src="https://alanruizig01-byte.github.io/AlanRuiz/cancion.mp3" type="audio/mpeg">
+<audio id="music" loop>
+  <source src="cancion.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-document.addEventListener("DOMContentLoaded",()=>{
+const stage=document.getElementById("stage");
+const music=document.getElementById("music");
 
-const stage = document.getElementById("stage");
-const music = document.getElementById("bgMusic");
-
-// 💖 Introducción
-function intro(){
-  stage.innerHTML=`
-  <div class="panel">
-    <h1>Hola <span class="name">Brianda Karely</span> 💖</h1>
-    <p>Eres ÚNICA y ESPECIAL.</p>
-    <button onclick="startMusic(); historia()">Comenzar</button>
-  </div>`;
-}
-
-// 🎵 Música de fondo
-function startMusic(){
-  music.volume=0.5;
-  music.play().catch(()=>{});
-}
-
-// 📸 Slider de fotos
-function historia(){
-  let fotos = ["foto1.jpg","foto2.jpg","foto3.jpg","foto4.jpg","foto5.jpg","foto6.jpg","foto8.jpg","foto9.jpg"];
-  let currentFoto=0;
-  let vueltas=0;
-  let notifMostrada=false;
-
-  stage.innerHTML=`
-  <div class="panel">
-    <h2>Fotos bonitas nuestras 📸</h2>
-    <div class="slider">
-      ${fotos.map((f,i)=>`<img src="${f}" class="${i===0?'active':''}">`).join('')}
-    </div>
-    <button onclick="pregunta()">Continuar</button>
-  </div>`;
-
-  const images=document.querySelectorAll(".slider img");
-
-  const interval=setInterval(()=>{
-    images[currentFoto].classList.remove("active");
-    currentFoto=(currentFoto+1)%images.length;
-    images[currentFoto].classList.add("active");
-
-    if(currentFoto===0){
-      vueltas++;
-      if(vueltas===1 && !notifMostrada){
-        notifMostrada=true;
-        setTimeout(()=>{
-          showNotif("Sé que te encantan las fotos amor 💖, pero dale continuar jiji 😘");
-          if(navigator.vibrate) navigator.vibrate([200,100,200]);
-        },3000);
-      }
-    }
-  },2000);
-}
-
-// 💘 Pregunta San Valentín
-function pregunta(){
-  stage.innerHTML=`
-  <div class="panel">
-    <h2>Pregunta importante 💘</h2>
-    <p id="textoNo">¿Quieres ser mi Valentín este 14 de febrero?</p>
-    <button onclick="carta()">Sí</button>
-    <button id="noBtn">No</button>
-  </div>`;
-
-  const noBtn=document.getElementById("noBtn");
-  const texto=document.getElementById("textoNo");
-  const frases=["¿Segura? 😏","Piénsalo bien 💕","Eso no se vale 😳","Yo sé que sí quieres 💖","Ándale di que sí 🥺","Ese botón no funciona 😅"];
-  let i=0;
-
-  function moverNo(){
-    const x=Math.random()*200-100;
-    const y=Math.random()*80-40;
-    noBtn.style.transform=`translate(${x}px, ${y}px)`;
-    texto.textContent=frases[i];
-    i=(i+1)%frases.length;
-    if(navigator.vibrate) navigator.vibrate(200);
-  }
-
-  noBtn.addEventListener("mouseenter",moverNo);
-  noBtn.addEventListener("touchstart",e=>{e.preventDefault(); moverNo()});
-}
-
-// 💌 Carta romántica
-function carta(){
-  stage.innerHTML=`
-  <div class="panel">
-    <h2>Para ti 💌</h2>
-    <div class="letter">
-      <p><b>Brianda Karely</b>, quiero que sepas que eres la mujer más hermosa,
-      especial e increíble que existe. Gracias por llegar a mi vida,
-      por tu amor, por tu risa y por hacerme tan feliz.  
-      Te amo con todo mi corazón 💖</p>
-    </div>
-    <button onclick="final()">Siguiente</button>
-  </div>`;
-}
-
-// 🎉 Final con corazones y confeti
-function final(){
-  const finalImg = new Image();
-  finalImg.src = "foto7.jpg";
-  finalImg.onload = () => {
-    stage.innerHTML=`
-      <div class="panel final">
-        <h1>TE ELIJO HOY Y SIEMPRE</h1>
-        <img class="final-img" src="foto7.jpg">
-      </div>
-      <div class="final-hearts">
-        ${Array.from({length:40}).map(()=>'<span>❤️</span>').join('')}
-      </div>
-      <div class="confetti">
-        ${Array.from({length:100}).map(()=>'<span></span>').join('')}
-      </div>
-      <button onclick="location.reload()" style="margin-top:20px;">Reproducir de nuevo</button>`; // botón visible en móviles
-
-    const imgEl = document.querySelector(".final-img");
-    setTimeout(()=>{ imgEl.style.opacity = 1; }, 50);
-
-    document.querySelectorAll(".final-hearts span").forEach(h=>{
-      h.style.left=Math.random()*100+"vw";
-      h.style.fontSize=(18+Math.random()*24)+"px";
-      h.style.animationDuration=(4+Math.random()*4)+"s";
-    });
-
-    document.querySelectorAll(".confetti span").forEach(c=>{
-      c.style.left=Math.random()*100+"vw";
-      c.style.background=`hsl(${Math.random()*360},80%,60%)`;
-      c.style.animationDuration=(3+Math.random()*3)+"s";
-      c.style.width=(6+Math.random()*6)+"px";
-      c.style.height=c.style.width;
-    });
-  };
-}
-
-// 🔔 Notificación
 function showNotif(msg){
   const n=document.createElement("div");
   n.className="notif";
   n.textContent=msg;
   document.body.appendChild(n);
-  setTimeout(()=>{n.remove()},5000);
+  setTimeout(()=>n.remove(),5000);
 }
 
-window.startMusic=startMusic;
-window.historia=historia;
-window.pregunta=pregunta;
-window.carta=carta;
-window.final=final;
+/* INTRO */
+function intro(){
+  music.pause();
+  music.currentTime=0;
+  stage.innerHTML=`
+  <div class="panel">
+    <h1>Hola <span class="name">Brianda Karely</span> 💖</h1>
+    <p>Esto es solo para ti…</p>
+    <button onclick="start()">Comenzar</button>
+  </div>`;
+}
+
+function start(){
+  music.volume=.5;
+  music.play().catch(()=>{});
+  historia();
+}
+
+/* HISTORIA */
+function historia(){
+  const fotos=["foto1.jpg","foto2.jpg","foto3.jpg","foto4.jpg","foto5.jpg","foto6.jpg","foto8.jpg","foto9.jpg"];
+  let i=0;
+  let aviso=false;
+
+  stage.innerHTML=`
+  <div class="panel">
+    <h2>Fotos bonitas nuestras 📸</h2>
+    <div class="slider">
+      ${fotos.map((f,j)=>`<img src="${f}" class="${j===0?'active':''}">`).join("")}
+    </div>
+    <button onclick="pregunta()">Continuar</button>
+  </div>`;
+
+  const imgs=document.querySelectorAll(".slider img");
+
+  setInterval(()=>{
+    imgs[i].classList.remove("active");
+    i=(i+1)%imgs.length;
+    imgs[i].classList.add("active");
+    if(i===0 && !aviso){
+      aviso=true;
+      showNotif("Ya sé que te encantan las fotos amor 💖, pero dale continuar jiji ❤️");
+    }
+  },2000);
+}
+
+/* PREGUNTA */
+function pregunta(){
+  stage.innerHTML=`
+  <div class="panel">
+    <h2>¿Quieres ser mi Valentín este 14? 💘</h2>
+    <p id="msg"></p>
+    <button onclick="sorpresas()">Sí</button>
+    <button id="no">No</button>
+  </div>`;
+
+  const frases=["Ese no no sirve 😅","Ándale di que sí 🥺","Yo sé que quieres 💖","Piénsalo bien 😏"];
+  let i=0;
+
+  const no=document.getElementById("no");
+  const msg=document.getElementById("msg");
+
+  const mover=()=>{
+    no.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*80-40}px)`;
+    msg.textContent=frases[i++%frases.length];
+  };
+
+  no.onmouseenter=mover;
+  no.ontouchstart=e=>{e.preventDefault(); mover()};
+}
+
+/* SORPRESAS */
+function sorpresas(){
+  stage.innerHTML=`
+  <div class="panel">
+    <h2>Sorpresas para ti 🎁</h2>
+    <button onclick="cine()">🎬 Cine</button>
+    <button onclick="comida()">🍽️ Comida</button>
+    <button onclick="carta()">💌 Carta</button>
+  </div>`;
+}
+
+function cine(){
+  stage.innerHTML=`
+  <div class="panel">
+    <h2>Nuestra cita al cine 🍿</h2>
+    <div class="reel">
+      <video src="cine.mp4" autoplay loop muted playsinline></video>
+    </div>
+    <p>Palomitas, risas y tú a mi lado… plan perfecto. Elige el día y la pelicula 💖</p>
+    <button onclick="sorpresas()">Regresar</button>
+  </div>`;
+}
+
+function comida(){
+  stage.innerHTML=`
+  <div class="panel">
+    <h2>Ir a comer contigo 🍽️</h2>
+    <div class="reel">
+      <video src="comida.mp4" autoplay loop muted playsinline></video>
+    </div>
+    <p>Tú eliges el día y el lugar, yo solo quiero sentarme frente a ti, mirarte sonreír y compartir ese momento contigo 💖</p>
+    <button onclick="sorpresas()">Regresar</button>
+  </div>`;
+}
+
+function carta(){
+  const texto="Brianda Karely, quiero que sepas que eres la mujer más hermosa, especial e increíble que existe. Gracias por llegar a mi vida, por tu amor, por tu risa y por hacerme tan feliz. Te amo con todo mi corazón 💖";
+  let i=0;
+  stage.innerHTML=`
+  <div class="panel">
+    <h2>Para ti 💌</h2>
+    <div class="reel">
+      <video src="carta.mp4" autoplay loop muted playsinline></video>
+    </div>
+    <div class="letter" id="l"></div>
+    <button id="b" style="display:none" onclick="final()">Siguiente</button>
+  </div>`;
+  const l=document.getElementById("l");
+  const b=document.getElementById("b");
+  (function escribir(){
+    if(i<texto.length){
+      l.textContent+=texto[i++];
+      setTimeout(escribir,40);
+    } else b.style.display="block";
+  })();
+}
+
+/* FINAL */
+function final(){
+  stage.innerHTML=`
+  <div class="panel">
+    <h1>TE ELIJO HOY Y SIEMPRE 💖</h1>
+    <img src="foto7.jpg" class="final-img" id="fi">
+    <div class="final-actions">
+      <button onclick="sorpresas()">Volver</button>
+      <button onclick="intro()">Volver a iniciar</button>
+    </div>
+  </div>`;
+  setTimeout(()=>document.getElementById("fi").style.opacity=1,100);
+}
 
 intro();
-});
 </script>
 </body>
 </html>
+
